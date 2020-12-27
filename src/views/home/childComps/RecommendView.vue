@@ -3,7 +3,7 @@
     <div class="recommend-item" v-for="item in recommends">
       <a :href="item.link">
         <img :src="item.image" alt="">
-        <span>{{item.title}}</span>
+        <div><span>{{item.title}}</span></div>
       </a>
     </div>
   </div>
@@ -28,6 +28,8 @@
     font-size: 14px;
     padding-bottom: 30px;
     border-bottom: 10px solid #eee;
+    justify-content: space-around;
+
   }
 
   .recommend-item {
@@ -36,8 +38,8 @@
   }
 
   .recommend img {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     margin-bottom: 10px;
   }
 </style>
