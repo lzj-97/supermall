@@ -3,12 +3,13 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view></feature-view>
-    <tab-control :title="['流行', '新款', '精选']" class="tab-control"></tab-control>
 
-    <ul>
+    <scroll class="content" :probeType="3" :pullUpLoad="true">
+      <home-swiper :banners="banners"></home-swiper>
+      <recommend-view :recommends="recommends"></recommend-view>
+      <feature-view></feature-view>
+      <tab-control :title="['流行', '新款', '精选']" class="tab-control"></tab-control>
+      <ul>
       <li>列表1</li>
       <li>列表2</li>
       <li>列表3</li>
@@ -110,11 +111,14 @@
       <li>列表99</li>
       <li>列表100</li>
     </ul>
+    </scroll>
+
   </div>
 </template>
 
 <script>
   import NavBar from 'components/common/navbar/NavBar';
+  import Scroll from "components/common/scroll/Scroll";
   import TabControl from "components/content/tabControl/TabControl";
   import GoodsList from "components/content/goods/GoodsList";
 
@@ -124,10 +128,12 @@
 
   import {getHomeMultidata, getHomeGoods} from "network/home";
 
+
   export default {
     name: "Home",
     components: {
       NavBar,
+      Scroll,
       TabControl,
       GoodsList,
       HomeSwiper,
@@ -154,6 +160,8 @@
       this.getHomeGoods('new');
       this.getHomeGoods('sell');
     },
+    mounted() {
+    },
     methods: {
       getHomeMultidata() {
         getHomeMultidata().then(res => {
@@ -177,8 +185,12 @@
 
 <style scoped>
   .home {
-    padding-top: 44px;
-    width: 100%;
+    /*padding-top: 44px;*/
+    /*width: 100%;*/
+    height: 100vh;
+    /*margin-top: 44px;*/
+    position: relative;
+    /*padding-top: 44px;*/
   }
 
   .home-nav {
@@ -195,4 +207,21 @@
     position: sticky;
     top: 44px;
   }
+
+  .content {
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+  }
+
+  /*.content {*/
+  /*  height: 300px;*/
+  /*}*/
+
+  /*.content {*/
+  /*  height: calc(100% - 93px);*/
+  /*  margin-top: 44px;*/
+  /*}*/
 </style>
