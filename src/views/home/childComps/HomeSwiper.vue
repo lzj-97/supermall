@@ -37,8 +37,8 @@
       },
 	    imageLoaded() {
       	if (!this.isLoaded) {
-      		this.$emit('swiperLoaded')
-          this.isLoaded = true
+      		this.$emit('swiperLoaded');
+          this.isLoaded = true;
         }
 	    }
     }

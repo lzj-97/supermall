@@ -1,7 +1,15 @@
 <template>
   <div class="wrapper">
     <ul class="content">
+      <!--
+      button无论是否设置click: false都可以监听点击事件
+      -->
       <button @click="btnClick()">按钮</button>
+
+      <!--
+      div必须设置click: true才能监听点击事件
+      -->
+      <div @click="btnClick()">按钮</div>
       <li>分类列表1</li>
       <li>分类列表2</li>
       <li>分类列表3</li>

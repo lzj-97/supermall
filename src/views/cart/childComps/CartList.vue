@@ -5,8 +5,8 @@
 </template>
 
 <script>
-  import Scroll from 'components/common/scroll/Scroll'
-  import CartListItem from './CartListItem'
+  import Scroll from 'components/common/scroll/Scroll';
+  import CartListItem from './CartListItem';
 
 	export default {
 		name: "CartList",
@@ -20,8 +20,8 @@
 		      return []
         }
       }
-    }
-	}
+    },
+  }
 </script>
 
 <style scoped>
@@ -31,5 +31,6 @@
     left: 0;
     right: 0;
     bottom: 93px;
+    height: calc(100% - 44px - 49px -44px);
   }
 </style>

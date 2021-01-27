@@ -12,17 +12,17 @@
     props: {
 		  value: {
 		    type: Boolean,
-        default: true
+        default: true,
       }
     },
     data: function () {
 		  return {
-		    checked: this.value
+		    checked: this.value,
       }
     },
     methods: {
       selectItem: function () {
-        this.$emit('checkBtnClick')
+        this.$emit('checkBtnClick');
       }
     },
     watch: {

@@ -1,6 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick">
     <img @load="imgLoad" v-lazy="showImage" :key="showImage" alt="">
+<!--    <img @load="imgLoad" :src="showImage" :key="showImage" alt="">-->
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -22,7 +23,7 @@
     },
     computed: {
     	showImage() {
-    		return this.goodsItem.img || this.goodsItem.image || this.goodsItem.show.img
+    		return this.goodsItem.img || this.goodsItem.image || this.goodsItem.show.img;
       }
     },
     methods: {
@@ -30,10 +31,17 @@
         // 1.获取iid
         const iid = this.goodsItem.iid;
         // 2.跳转到详情页面
-        this.$router.push({path: '/detail', query: {iid}})
+        // this.$router.push({path: '/detail', query: {iid}});
+        this.$router.push('/detail/' + iid);
       },
 	    imgLoad() {
-		    this.$bus.$emit('imgLoad')
+		    this.$bus.$emit('imgLoad');
+
+        // if (this.$route.path.includes('/home')) {
+        //   this.$bus.$emit('homeImgLoad');
+        // } else if (this.$route.path.includes('/detail')) {
+        //   this.$bus.$emit('detailImgLoad');
+        // }
 	    }
     }
   }

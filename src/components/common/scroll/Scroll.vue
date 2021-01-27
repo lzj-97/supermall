@@ -38,11 +38,11 @@
     },
     computed: {
     	scrollY() {
-    		return this.scroll.y
+    		return this.scroll ? this.scroll.y : 0;
       }
     },
     mounted() {
-      setTimeout(this._initScroll, 20)
+      setTimeout(this._initScroll, 100);
     },
     methods: {
       _initScroll() {
@@ -51,13 +51,13 @@
           probeType: this.probeType,
           click: this.click,
           pullUpLoad: this.pullUpLoad
-        })
+        });
 
         // 2.事件滚动
         if (this.probeType === 2 || this.probeType === 3) {
           this.scroll.on('scroll', position => {
             // console.log(position);
-            this.$emit('scroll', position)
+            this.$emit('scroll', position);
           })
         }
 
@@ -65,18 +65,19 @@
         if (this.pullUpLoad) {
           this.scroll.on('pullingUp', () => {
             // console.log('上拉加载更多');
-            this.$emit('pullingUp')
+            this.$emit('pullingUp');
           })
         }
       },
       refresh() {
-        this.scroll && this.scroll.refresh && this.scroll.refresh()
+        this.scroll && this.scroll.refresh && this.scroll.refresh();
+        // console.log('refresh');
       },
       finishedPullUp() {
         this.scroll && this.scroll.finishPullUp && this.scroll.finishPullUp()
       },
       scrollTo(x, y, time=100) {
-        this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time)
+        this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time);
       }
     },
     watch: {

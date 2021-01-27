@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import GoodsListItem from './GoodsListItem'
+  import GoodsListItem from './GoodsListItem';
 
   export default {
     name: "GoodsList",

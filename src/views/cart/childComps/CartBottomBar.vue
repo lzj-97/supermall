@@ -3,7 +3,7 @@
     <CheckButton class="select-all" @checkBtnClick="checkBtnClick" v-model="isSelectAll"></CheckButton>
     <span>全选</span>
     <span class="total-price">合计: ¥{{totalPrice}}</span>
-    <span class="buy-product">去计算({{cartLength}})</span>
+    <span class="buy-product">去结算({{payNum}})</span>
   </div>
 </template>
 
@@ -18,15 +18,16 @@
     },
     computed: {
       ...mapGetters([
-      	'cartList',
-        'cartLength'
+        'cartList',
+        'cartLength',
+        'payNum',
       ]),
 		  totalPrice() {
         const cartList = this.cartList;
         return cartList.filter(item => {
-          return item.checked
+          return item.checked;
         }).reduce((preValue, item) => {
-          return preValue + item.count * item.price
+          return preValue + item.count * item.price;
         }, 0).toFixed(2)
       },
       isSelectAll: function () {
@@ -35,18 +36,12 @@
     },
     methods: {
       checkBtnClick: function () {
-        // 1.判断是否有未选中的按钮
-        let isSelectAll = this.$store.getters.cartList.find(item => !item.checked);
 
         // 2.有未选中的内容, 则全部选中
-        if (isSelectAll) {
-          this.$store.state.cartList.forEach(item => {
-            item.checked = true;
-          });
+        if (this.isSelectAll) {
+          this.$store.state.cartList.forEach(item => item.checked = true);
         } else {
-          this.$store.state.cartList.forEach(item => {
-            item.checked = false;
-          });
+          this.$store.state.cartList.forEach(item => item.checked = false);
         }
       }
     }
