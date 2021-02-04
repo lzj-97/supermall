@@ -24,12 +24,36 @@
         type: Boolean,
         default: false
       },
+      deceleration: {
+        type: Number,
+        default: 0.001,
+      },
+      momentumLimitTime: {
+        type: Number,
+        default: 300
+      },
+      momentumLimitDistance: {
+        type: Number,
+        default: 15
+      },
+      swipeTime: {
+        type: Number,
+        default: 1500
+      },
+      useTransition: {
+        type: Boolean,
+        default: true
+      },
+      useTransform: {
+        type: Boolean,
+        default: true
+      },
       data: {
         type: Array,
         default() {
           return []
         }
-      }
+      },
     },
     data() {
       return {
@@ -42,7 +66,8 @@
       }
     },
     mounted() {
-      setTimeout(this._initScroll, 100);
+      // setTimeout(this._initScroll, 100);
+      this._initScroll();
     },
     methods: {
       _initScroll() {
@@ -50,11 +75,17 @@
         this.scroll = new BScroll(this.$refs.wrapper, {
           probeType: this.probeType,
           click: this.click,
-          pullUpLoad: this.pullUpLoad
+          pullUpLoad: this.pullUpLoad,
+          // momentumLimitDistance: this.momentumLimitDistance,
+          deceleration: this.deceleration,
+          swipeTime: this.swipeTime,
+          useTransition: this.useTransition,
+          useTransform: this.useTransform,
+          HWCompositing: true,
         });
 
         // 2.事件滚动
-        if (this.probeType === 2 || this.probeType === 3) {
+        if (this.probeType === 1 || this.probeType === 2 || this.probeType === 3) {
           this.scroll.on('scroll', position => {
             // console.log(position);
             this.$emit('scroll', position);

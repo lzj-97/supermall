@@ -1,164 +1,185 @@
 <template>
-  <div class="wrapper">
-    <ul class="content">
-      <!--
-      button无论是否设置click: false都可以监听点击事件
-      -->
-      <button @click="btnClick()">按钮</button>
+  <div class="category">
+    <nav-bar class="nav">
+      <div slot="center">商品分类</div>
+    </nav-bar>
+    <div class="content">
+      <tab-menu :categories="categories"
+                @selectItem="selectItem"
+                ref="menu"></tab-menu>
 
-      <!--
-      div必须设置click: true才能监听点击事件
-      -->
-      <div @click="btnClick()">按钮</div>
-      <li>分类列表1</li>
-      <li>分类列表2</li>
-      <li>分类列表3</li>
-      <li>分类列表4</li>
-      <li>分类列表5</li>
-      <li>分类列表6</li>
-      <li>分类列表7</li>
-      <li>分类列表8</li>
-      <li>分类列表9</li>
-      <li>分类列表10</li>
-      <li>分类列表11</li>
-      <li>分类列表12</li>
-      <li>分类列表13</li>
-      <li>分类列表14</li>
-      <li>分类列表15</li>
-      <li>分类列表16</li>
-      <li>分类列表17</li>
-      <li>分类列表18</li>
-      <li>分类列表19</li>
-      <li>分类列表20</li>
-      <li>分类列表21</li>
-      <li>分类列表22</li>
-      <li>分类列表23</li>
-      <li>分类列表24</li>
-      <li>分类列表25</li>
-      <li>分类列表26</li>
-      <li>分类列表27</li>
-      <li>分类列表28</li>
-      <li>分类列表29</li>
-      <li>分类列表30</li>
-      <li>分类列表31</li>
-      <li>分类列表32</li>
-      <li>分类列表33</li>
-      <li>分类列表34</li>
-      <li>分类列表35</li>
-      <li>分类列表36</li>
-      <li>分类列表37</li>
-      <li>分类列表38</li>
-      <li>分类列表39</li>
-      <li>分类列表40</li>
-      <li>分类列表41</li>
-      <li>分类列表42</li>
-      <li>分类列表43</li>
-      <li>分类列表44</li>
-      <li>分类列表45</li>
-      <li>分类列表46</li>
-      <li>分类列表47</li>
-      <li>分类列表48</li>
-      <li>分类列表49</li>
-      <li>分类列表50</li>
-      <li>分类列表51</li>
-      <li>分类列表52</li>
-      <li>分类列表53</li>
-      <li>分类列表54</li>
-      <li>分类列表55</li>
-      <li>分类列表56</li>
-      <li>分类列表57</li>
-      <li>分类列表58</li>
-      <li>分类列表59</li>
-      <li>分类列表60</li>
-      <li>分类列表61</li>
-      <li>分类列表62</li>
-      <li>分类列表63</li>
-      <li>分类列表64</li>
-      <li>分类列表65</li>
-      <li>分类列表66</li>
-      <li>分类列表67</li>
-      <li>分类列表68</li>
-      <li>分类列表69</li>
-      <li>分类列表70</li>
-      <li>分类列表71</li>
-      <li>分类列表72</li>
-      <li>分类列表73</li>
-      <li>分类列表74</li>
-      <li>分类列表75</li>
-      <li>分类列表76</li>
-      <li>分类列表77</li>
-      <li>分类列表78</li>
-      <li>分类列表79</li>
-      <li>分类列表80</li>
-      <li>分类列表81</li>
-      <li>分类列表82</li>
-      <li>分类列表83</li>
-      <li>分类列表84</li>
-      <li>分类列表85</li>
-      <li>分类列表86</li>
-      <li>分类列表87</li>
-      <li>分类列表88</li>
-      <li>分类列表89</li>
-      <li>分类列表90</li>
-      <li>分类列表91</li>
-      <li>分类列表92</li>
-      <li>分类列表93</li>
-      <li>分类列表94</li>
-      <li>分类列表95</li>
-      <li>分类列表96</li>
-      <li>分类列表97</li>
-      <li>分类列表98</li>
-      <li>分类列表99</li>
-      <li>分类列表100</li>
-    </ul>
+      <tab-control :titles="['综合', '新品', '销量']"
+                   class="top-tab-control"
+                   ref="topTabControl"
+                   @tabClick="tabClick"
+                   v-show="isShowTab"/>
+
+      <scroll class="scroll"
+              ref="scroll"
+              :probeType="3"
+              :key="currentIndex"
+              @scroll="scroll">
+
+        <tab-content-category :subcategories="subCategory"
+                              @contentImgLoaded="contentImgLoaded"
+                              ref="tabContent"/>
+
+        <tab-control :titles="['综合', '新品', '销量']"
+                     @tabClick="tabClick"
+                     ref="tabControl"/>
+        <tab-content-detail :category-detail="showDetail"/>
+      </scroll>
+    </div>
   </div>
 </template>
 
 <script>
-  import BScroll from 'better-scroll';
+  import NavBar from "components/common/navbar/NavBar";
+  import Scroll from "components/common/scroll/Scroll";
+
+  import TabControl from "components/content/tabControl/TabControl";
+
+  import TabMenu from "./childComps/TabMenu";
+  import TabContentDetail from "./childComps/TabContentDetail";
+  import TabContentCategory from "./childComps/TabContentCategory";
+
+  import {getCategories, getSubCategory, getCategoryDetail} from "network/category";
 
   export default {
     name: "Category",
     data() {
       return {
-        scroll: null,
+        categories: [],
+        subCategory: {},
+        categoryDetail: {
+          'pop': [],
+          'new': [],
+          'sell': [],
+        },
+        currentIndex: -1,
+        tabControlTop: 0,
+        isShowTab: false,
+        currentType: 'pop'
       }
     },
-    mounted() {
-      this.scroll = new BScroll('.wrapper', {
-        probeType: 3,
-        pullUpLoad: true,
-      });
-      // console.log(this.scroll);
-      // console.log(this.$refs.aaa);
+    components: {
+      NavBar,
+      Scroll,
+      TabControl,
+      TabMenu,
+      TabContentDetail,
+      TabContentCategory,
+    },
+    created() {
+      // 1.获取商品分类信息
+      this._getCategories();
+      setTimeout(() => {
+        this.$refs.menu.$refs.scroll.refresh();
+      }, 1000);
 
-      this.scroll.on('scroll', position => {
-        console.log(position);
-      });
-
-      this.scroll.on('pullingUp', () => {
-        console.log('上拉加载更多');
+      // 2.监听图片加载完成
+      this.$bus.$on('imgLoad', () => {
+        this.$refs.scroll.refresh();
       })
+    },
+    computed: {
+      showDetail() {
+        return this.categoryDetail[this.currentType];
+      }
     },
     methods: {
       btnClick() {
         console.log('btnClick');
-      }
+      },
+      _getCategories() {
+        getCategories().then(res => {
+          this.categories = res.data.category.list;
+
+          this._getSubCategory(0);
+        });
+      },
+      _getSubCategory(index) {
+        this.currentIndex = index;
+        this.isShowTab = false;
+
+        getSubCategory(this.categories[index].maitKey).then(res => {
+          this.subCategory = res.data;
+
+          let miniWallkey = this.categories[index].miniWallkey;
+          this._getCategoryDetail(miniWallkey, 'pop');
+          this._getCategoryDetail(miniWallkey, 'new');
+          this._getCategoryDetail(miniWallkey, 'sell');
+          // setTimeout(() => {
+          //   this.$refs.scroll.refresh();
+          // },1000);
+        });
+      },
+      _getCategoryDetail(miniWallkey, type) {
+        getCategoryDetail(miniWallkey, type).then(res => {
+          this.categoryDetail[type] = res;
+        });
+      },
+      selectItem(index) {
+        this._getSubCategory(index);
+        this.tabClick(0);
+      },
+      contentImgLoaded() {
+        setTimeout(() => {
+          this.tabControlTop = this.$refs.tabControl.$el.offsetTop;
+        }, 1000);
+      },
+      scroll(position) {
+        this.isShowTab = -position.y > this.tabControlTop;
+      },
+      tabClick(index) {
+        switch (index) {
+          case 0:
+            this.currentType = 'pop';
+            break;
+          case 1:
+            this.currentType = 'new';
+            break;
+          case 2:
+            this.currentType = 'sell';
+            break;
+        }
+
+        this.$refs.tabControl.currentIndex = index;
+        this.$refs.topTabControl.currentIndex = index;
+      },
     }
   }
 </script>
 
 <style scoped>
-  ul.content {
-    /*height: 300px;*/
-    /*background: #f00;*/
-    /*overflow: hidden;*/
-    /*overflow-y: scroll;*/
+  .category {
+    height: 100vh;
   }
 
-  .wrapper{
-    height: 150px;
-    background: #f00;
-    overflow: hidden;
+  .nav {
+    background-color: var(--color-tint);
+    color: #fff;
+  }
+
+  .content {
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+    display: flex;
+  }
+
+  .scroll {
+    flex: 1;
+    position: relative;
+  }
+
+  .top-tab-control {
+    position: fixed;
+    left: 100px;
+    right: 0;
+    top: 44px;
+    z-index: 1;
   }
 </style>

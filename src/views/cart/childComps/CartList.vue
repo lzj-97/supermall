@@ -6,9 +6,10 @@
 
 <script>
   import Scroll from 'components/common/scroll/Scroll';
+
   import CartListItem from './CartListItem';
 
-	export default {
+  export default {
 		name: "CartList",
     components: {
 		  Scroll, CartListItem
@@ -25,6 +26,7 @@
 </script>
 
 <style scoped>
+
   .cart-list {
     position: absolute;
     top: 44px;

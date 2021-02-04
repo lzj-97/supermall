@@ -4,7 +4,7 @@
       <div slot="center">购物车({{cartLength}})</div>
     </nav-bar>
 
-    <cart-list :cart-list="cartList"/>
+    <cart-list :cart-list="cartList" class="cart-list"/>
 
     <cart-bottom-bar/>
   </div>
@@ -46,5 +46,9 @@
   .nav-bar {
     background-color: var(--color-tint);
     color: #fff;
+  }
+
+  .cart-list {
+    background: #f2f2f2;
   }
 </style>

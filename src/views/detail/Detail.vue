@@ -30,7 +30,7 @@
 
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from "components/content/goods/GoodsList";
-  import BackTop from "components/content/backTop/BackTop";
+  // import BackTop from "components/content/backTop/BackTop";
 
   import {getDetail, Goods, GoodsParam, getRecommend} from "network/detail";
   import {debounce} from "common/utils";
@@ -51,7 +51,7 @@
       DetailBottomBar,
       Scroll,
       GoodsList,
-      BackTop,
+      // BackTop,
     },
     mixins: [imgListenerMixin, backTopMixin],
     data() {
@@ -144,7 +144,7 @@
         this.getThemeTops();
       },
       titleClick(index) {
-        this.$refs.scroll.scrollTo(0, -this.themeTops[index], 1000);
+        this.$refs.scroll.scrollTo(0, -this.themeTops[index], 500);
       },
       contentScroll(position) {
         // console.log(position);

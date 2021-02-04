@@ -1,19 +1,17 @@
 <template>
-  <scroll id="tab-menu">
-    <div class="menu-list">
-      <div class="menu-list-item"
-           :class="{active: index===currentIndex}"
-           v-for="(item, index) in categories"
-           :key="index"
-           @click="itemClick(index)">
-        {{item.title}}
-      </div>
+  <scroll id="tab-menu" ref="scroll">
+    <div class="menu-list-item"
+              :class="{active: index===currentIndex}"
+              v-for="(item, index) in categories"
+              :key="index"
+              @click="itemClick(index)">
+      {{item.title}}
     </div>
   </scroll>
 </template>
 
 <script>
-  import Scroll from 'components/common/scroll/Scroll'
+  import Scroll from 'components/common/scroll/Scroll';
 
 	export default {
 		name: "TabMenu",
@@ -30,9 +28,9 @@
     },
     methods: {
 		  itemClick(index) {
-        this.currentIndex = index
-        this.$emit('selectItem', index)
-      }
+        this.currentIndex = index;
+        this.$emit('selectItem', index);
+      },
     }
 	}
 </script>

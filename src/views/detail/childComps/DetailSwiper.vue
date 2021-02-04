@@ -1,5 +1,5 @@
 <template>
-  <swiper>
+  <swiper ref="swiper">
     <swiper-item v-for="item in topImages" class="swiper-item">
       <img :src="item" alt="" @load="imgLoaded">
     </swiper-item>
@@ -33,6 +33,8 @@
         if(!this.isLoaded){
           this.$emit('imgLoaded');
           this.isLoaded = true;
+
+          // this.$refs.swiper.swiperInit();
         }
       }
     }

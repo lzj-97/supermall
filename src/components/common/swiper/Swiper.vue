@@ -1,10 +1,8 @@
 <template>
     <div id="hy-swiper">
-      <div class="swiper" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
+      <div class="swiper" ref="swiperContent" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
         <slot></slot>
       </div>
-      <slot name="indicator">
-      </slot>
       <div class="indicator">
         <slot name="indicator" v-if="showIndicator && slideCount>1">
           <div v-for="(item, index) in slideCount" class="indi-item" :class="{active: index === currentIndex-1}" :key="index"></div>
@@ -14,6 +12,8 @@
 </template>
 
 <script>
+  import SwiperItem from "./SwiperItem";
+
 	export default {
 		name: "Swiper",
     props: {
@@ -32,7 +32,7 @@
       showIndicator: {
         type: Boolean,
         default: true
-      }
+      },
     },
     data: function () {
 		  return {
@@ -41,18 +41,45 @@
         swiperStyle: {}, // swiper样式
         currentIndex: 1, // 当前的index
         scrolling: false, // 是否正在滚动
+        isInit: false,
       }
+    },
+    components: {
+      SwiperItem,
     },
     mounted: function () {
       // 1.操作DOM, 在前后添加Slide
-      setTimeout(() => {
-        this.handleDom();
+      // setTimeout(() => {
+      //   this.handleDom();
+      //
+      //   // 2.开启定时器
+      //   this.startTimer();
+      // }, 100);
 
-        // 2.开启定时器
-        this.startTimer();
-      }, 300)
+
+      this.init();
+
+    },
+    updated() {
+		  this.init();
     },
     methods: {
+      /**
+       * 初始化处理并开启定时器
+       */
+      init() {
+        if(this.isInit) return;
+        if(this.$slots.default) {
+          // 1.操作DOM, 在前后添加Slide
+          this.handleDom();
+
+          // 2.开启定时器
+          this.startTimer();
+
+          this.isInit = true;
+        }
+      },
+
 		  /**
        * 定时器操作
        */
@@ -81,7 +108,7 @@
         this.checkPosition();
 
         // 4.滚动完成
-        this.scrolling = false
+        this.scrolling = false;
       },
 
       /**
@@ -118,7 +145,8 @@
        */
 		  handleDom: function () {
         // 1.获取要操作的元素
-        let swiperEl = document.querySelector('.swiper');
+        // let swiperEl = document.querySelector('.swiper');
+        let swiperEl = this.$refs.swiperContent;
         let slidesEls = swiperEl.getElementsByClassName('slide');
 
         // 2.保存个数
@@ -205,6 +233,8 @@
         // 3.添加定时器
         this.startTimer();
       }
+    },
+    watch: {
     }
 	}
 </script>

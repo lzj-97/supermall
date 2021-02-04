@@ -11,6 +11,8 @@
     <scroll class="content"
             :probe-type="3"
             :pull-up-load="true"
+            :use-transition="false"
+            :use-transform="false"
             ref="scroll"
             @scroll="contentScroll"
             @pullingUp="loadMore">
@@ -100,7 +102,7 @@
     activated() {
       this.$refs.scroll.scrollTo(0, this.saveY, 0);
       this.$refs.scroll.refresh();
-      console.log('homeActivated');
+      // console.log('homeActivated');
     },
     deactivated() {
       // 1.保存Y值
@@ -163,7 +165,7 @@
         this.isShowTabControl = -position.y > this.tabOffsetTop;
       },
       loadMore() {
-        console.log('上拉加载更多');
+        // console.log('上拉加载更多');
         this.getHomeGoods(this.currentType);
       },
       swiperLoaded() {

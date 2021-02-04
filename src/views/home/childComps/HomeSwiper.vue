@@ -9,14 +9,17 @@
 </template>
 
 <script>
-  import {Swiper, SwiperItem} from 'components/common/swiper'
+  import {Swiper, SwiperItem} from 'components/common/swiper';
 
   export default {
     name: "HomeSwiper",
     props: {
       banners: {
         type: Array,
-        required: true
+        required: true,
+        default() {
+          return []
+        }
       }
     },
     data() {
@@ -28,19 +31,24 @@
       Swiper,
       SwiperItem
     },
+    computed: {
+
+    },
     methods: {
-      startTimer() {
-	      this.$refs.swiper && this.$refs.swiper.startTimer()
-      },
-      stopTimer() {
-        this.$refs.swiper && this.$refs.swiper.stopTimer()
-      },
+      // startTimer() {
+	    //   this.$refs.swiper && this.$refs.swiper.startTimer();
+      // },
+      // stopTimer() {
+      //   this.$refs.swiper && this.$refs.swiper.stopTimer();
+      // },
 	    imageLoaded() {
       	if (!this.isLoaded) {
       		this.$emit('swiperLoaded');
           this.isLoaded = true;
+
+          // this.$refs.swiper.swiperInit();
         }
-	    }
+	    },
     }
   }
 </script>
